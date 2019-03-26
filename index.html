@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betetadas - Tweets</title>
+  <script type="text/javascript" src="js/sheetsee.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ICanHaz.js/0.10.3/ICanHaz.min.js"></script>
+	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js'></script>
+  <style>
+  body{
+    background-color: #f4f4f4;
+    font-family: sans-serif;
+    font-size: 16px;
+  }
+  h1{
+    margin-bottom: 3px;
+  }
+  div {
+    max-width: 600px;
+    margin: 0 auto 25px;
+  }
+  input{
+    max-width: 400px;
+    border-radius: 5px;
+    border: 2px solid #999;
+    padding: 5px 7px;
+    margin-top: 14px;
+  }
+  .mg-0{
+    margin:0;
+  }
+  .results_count{
+    float: right;
+    margin: 21px 7px 0px 0px;
+  }
+  </style>
+</head>
+<body>
+  <div>
+      <h1>#Betetadas - Tweets</h1>
+      <p class="mg-0">(Busca una palabra y dale enter para ver los resultados)</p>
+      <input id="fullTableFilter" type="text" placeholder="Piensa y busca..."></input>
+      <span class="results_count"></span> <br />
+      <hr />
+      <div id="fullTable"><strong class="loading-content">Cargando...</strong></div>
+  </div>
+    <script id="fullTable_template" type="text/html">
+        {{#rows}}
+        <div class="result-tweets">
+            <p><strong>@{{screen_name}}</strong> - {{text}}</p>
+            <p>Retweets {{retweet_count}} <span style="margin-left: 15px;">Favorites </span> {{favorite_count}}</p>
+            <p><small><strong>Tweet ID:</strong> {{id}}</small> | <small><a href="https://twitter.com/KarinaBeteta01/status/{{id}}" target="_blank">Link</a></small></p>
+            <p>---</p>
+        </div>
+              {{/rows}}
+      <footer>
+        <p>Made by <a href="https://twitter.com/geny_leong" target="_blank">Génesis León</a>. I just read <a href="bit.ly/2FzgH1s" target="_blank">THIS</a></p></footer>
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("fullTableFilter").value = ""
+        var URL = "https://docs.google.com/spreadsheets/d/14268bPzu-pDxZGVHgbu6CJsw4eT4KvwB5u8EHnhVMB4/edit?usp=sharing"
+        Tabletop.init({
+          key: URL,
+          callback: showInfo,
+          simpleSheet: true
+        })
+      })
+
+      function showInfo(data) {
+        var tableOptions = {
+          "data": data,
+          "pagination": 50,
+          "tableDiv": "#fullTable",
+          "filterDiv": "#fullTableFilter"
+        }
+
+        Sheetsee.makeTable(tableOptions)
+        Sheetsee.initiateTableFilter(tableOptions)
+
+        document.getElementById("fullTableFilter").onkeypress = function(e){
+              if (!e) e = window.event;
+              var keyCode = e.keyCode || e.which;
+              var word_search = document.getElementById("fullTableFilter").value.toLowerCase();
+              var foundmatch = [];
+              if (word_search != "null" && e.which == 13){
+                var results= data.length;
+                // console.log(results)
+                // console.log(data)
+                for(i=0; i < data.length; i++){
+
+                    if(data[i].text.toLowerCase().match(word_search)){
+                        foundmatch.push(data[i]);
+                    }
+                }
+                document.getElementsByClassName("results_count")[0].innerHTML = foundmatch.length + " resultados."
+                console.log(foundmatch.length)
+              }
+        }
+      }
+    </script>
+</body>
+</html>
