@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Betetadas - Tweets</title>
-  <script type="text/javascript" src="js/sheetsee.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ICanHaz.js/0.10.3/ICanHaz.min.js"></script>
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js'></script>
-  <style>
-  body{
-    background-color: #f4f4f4;
-    font-family: sans-serif;
-    font-size: 16px;
-    background: url("./img/bg-1.jpg") fixed 100% 0%;
-    margin: 0;
-  }
-  h1{
-    margin-bottom: 3px;
-    margin-top: 0;
-    padding-top: 21px;
-    color: #fff;
-  }
-  div.container {
-    max-width: 600px;
-    margin: 0 auto 25px;
-    background-color: #000000b3;
-    color: #fff;
-    padding: 21px;
-  }
-  a{
-    color: #d68b85;
-    cursor:pointer;
-  }
-  input{
-    max-width: 400px;
-    border-radius: 5px;
-    border: 2px solid #999;
-    padding: 5px 7px;
-    margin-top: 14px;
-  }
-  .mg-0{
-    margin:0;
-  }
-  .results_count{
-    float: right;
-    margin: 21px 7px 0px 0px;
-  }
-  .img{
-    margin:14px auto;
-    max-width: 250px;
-    display: block;
-  }
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betetadas - Tweets</title>
+    <script type="text/javascript" src="js/sheetsee.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ICanHaz.js/0.10.3/ICanHaz.min.js"></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js'></script>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: sans-serif;
+            font-size: 16px;
+            background: url("./img/bg-1.jpg") fixed 100% 0%;
+            margin: 0;
+        }
+        
+        h1 {
+            margin-bottom: 3px;
+            margin-top: 0;
+            padding-top: 21px;
+            color: #fff;
+        }
+        
+        div.container {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            background-color: #000000b3;
+            color: #fff;
+            padding: 21px;
+        }
+        
+        a {
+            color: #d68b85;
+            cursor: pointer;
+        }
+        
+        input {
+            max-width: 400px;
+            border-radius: 5px;
+            border: 2px solid #999;
+            padding: 5px 7px;
+            margin-top: 14px;
+        }
+        
+        .mg-0 {
+            margin: 0;
+        }
+        
+        .results_count {
+            float: right;
+            margin: 21px 7px 0px 0px;
+        }
+        
+        .img {
+            margin: 14px auto;
+            max-width: 250px;
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="container">
-      <h1>#Betetadas - Tweets</h1>
-      <!-- <img class="img" src="./img/beteta.jpg" alt=""> -->
-      <p class="mg-0">(Busca una palabra y dale enter para ver los resultados)</p>
-      <input id="fullTableFilter" type="text" placeholder="Piensa y busca..."></input>
-      <span class="results_count"></span> <br />
-      <hr />
-      <div id="fullTable"><strong class="loading-content">Cargando...</strong></div>
-  </div>
+    <div class="container">
+        <h1>#Betetadas - Tweets</h1>
+        <!-- <img class="img" src="./img/beteta.jpg" alt=""> -->
+        <p class="mg-0">(Busca una palabra y dale enter para ver los resultados)</p>
+        <input id="fullTableFilter" type="text" placeholder="Piensa y busca..."></input>
+        <span class="results_count"></span> <br />
+        <hr />
+        <div id="fullTable"><strong class="loading-content">Cargando...</strong></div>
+    </div>
     <script id="fullTable_template" type="text/html">
         {{#rows}}
         <div class="result-tweets">
@@ -72,55 +81,58 @@
             <p><small><strong>Tweet ID:</strong> {{id}}</small> | <small><a href="https://twitter.com/KarinaBeteta01/status/{{id}}" target="_blank">Link</a></small></p>
             <p>---</p>
         </div>
-              {{/rows}}
-      <footer>
-        <p>Made by <a href="https://twitter.com/geny_leong" target="_blank">Génesis León</a>. I just read <a href="https://bit.ly/2FzgH1s" target="_blank">THIS</a></p></footer>
+        {{/rows}}
+        <footer>
+            <p>Made by <a href="https://twitter.com/geny_leong" target="_blank">Génesis León</a>. I just read <a href="https://bit.ly/2FzgH1s" target="_blank">THIS</a></p>
+        </footer>
     </script>
     <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById("fullTableFilter").value = ""
-        var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSI8v7GRkOXfRZHwF-VQz_XAyszOUxSIpBH0RP4nBXRLH351fZRIa9jEy2AhMaqftZBoRDnbpMi-vT4/pub?output=csv"
-        
-	Papa.parse(url, {
-          download: true,
-          header: true,
-          complete: function(results) {
-            var data = results.data
-            console.log(data)
-          }
-      })
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("fullTableFilter").value = ""
+            var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSI8v7GRkOXfRZHwF-VQz_XAyszOUxSIpBH0RP4nBXRLH351fZRIa9jEy2AhMaqftZBoRDnbpMi-vT4/pub?output=csv"
 
-      function showInfo(data) {
-        var tableOptions = {
-          "data": data,
-          "pagination": 50,
-          "tableDiv": "#fullTable",
-          "filterDiv": "#fullTableFilter"
-        }
-
-        Sheetsee.makeTable(tableOptions)
-        Sheetsee.initiateTableFilter(tableOptions)
-
-        document.getElementById("fullTableFilter").onkeypress = function(e){
-              if (!e) e = window.event;
-              var keyCode = e.keyCode || e.which;
-              var word_search = document.getElementById("fullTableFilter").value.toLowerCase();
-              var foundmatch = [];
-              if (word_search != "null" && e.which == 13){
-                var results= data.length;
-                // console.log(results)
-                // console.log(data)
-                for(i=0; i < data.length; i++){
-
-                    if(data[i].text.toLowerCase().match(word_search)){
-                        foundmatch.push(data[i]);
-                    }
+            Papa.parse(url, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    var data = results.data
+                    console.log(data)
                 }
-                document.getElementsByClassName("results_count")[0].innerHTML = foundmatch.length + " resultados."
-                console.log(foundmatch.length)
-              }
+            })
+        })
+
+        function showInfo(data) {
+            var tableOptions = {
+                "data": data,
+                "pagination": 50,
+                "tableDiv": "#fullTable",
+                "filterDiv": "#fullTableFilter"
+            }
+
+            Sheetsee.makeTable(tableOptions)
+            Sheetsee.initiateTableFilter(tableOptions)
+
+            document.getElementById("fullTableFilter").onkeypress = function(e) {
+                if (!e) e = window.event;
+                var keyCode = e.keyCode || e.which;
+                var word_search = document.getElementById("fullTableFilter").value.toLowerCase();
+                var foundmatch = [];
+                if (word_search != "null" && e.which == 13) {
+                    var results = data.length;
+                    // console.log(results)
+                    // console.log(data)
+                    for (i = 0; i < data.length; i++) {
+
+                        if (data[i].text.toLowerCase().match(word_search)) {
+                            foundmatch.push(data[i]);
+                        }
+                    }
+                    document.getElementsByClassName("results_count")[0].innerHTML = foundmatch.length + " resultados."
+                    console.log(foundmatch.length)
+                }
+            }
         }
-      }
     </script>
 </body>
+
 </html>
