@@ -79,12 +79,15 @@
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("fullTableFilter").value = ""
-        var URL = "https://sheets.googleapis.com/v4/spreadsheets/14268bPzu-pDxZGVHgbu6CJsw4eT4KvwB5u8EHnhVMB4/values/Sheet1"
-        Tabletop.init({
-          key: URL,
-          callback: showInfo,
-          simpleSheet: true
-        })
+        var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSI8v7GRkOXfRZHwF-VQz_XAyszOUxSIpBH0RP4nBXRLH351fZRIa9jEy2AhMaqftZBoRDnbpMi-vT4/pub?output=csv"
+        
+	Papa.parse(url, {
+          download: true,
+          header: true,
+          complete: function(results) {
+            var data = results.data
+            console.log(data)
+          }
       })
 
       function showInfo(data) {
