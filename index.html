@@ -92,7 +92,7 @@
             document.getElementById("fullTableFilter").value = ""
             var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSI8v7GRkOXfRZHwF-VQz_XAyszOUxSIpBH0RP4nBXRLH351fZRIa9jEy2AhMaqftZBoRDnbpMi-vT4/pub?output=csv"
 
-            Papa.parse(url, {
+            Papa.parse(URL, {
                 download: true,
                 header: true,
                 complete: function(results) {
