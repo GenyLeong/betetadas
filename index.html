@@ -78,8 +78,9 @@
         {{#rows}}
         <div class="result-tweets">
             <p><strong>@{{from_user}}</strong> - {{text}}</p>
-            <!-- <p>Retweets {{retweet_count}} <span style="margin-left: 15px;">Original: </span> {{retweeted_status_screen_name}}</p> -->
+
             <p><small><strong>Tweet ID:</strong> {{id_str}}</small> | <small><a href="https://twitter.com/KarinaBeteta01/status/{{id_str}}" target="_blank">Link</a></small></p>
+            <p><small><strong>Fecha de publicación: </strong>{{time}}</small> </p>
             <p>---</p>
         </div>
         {{/rows}}
