@@ -77,9 +77,9 @@
     <script id="fullTable_template" type="text/html">
         {{#rows}}
         <div class="result-tweets">
-            <p><strong>@{{screen_name}}</strong> - {{text}}</p>
-            <p>Retweets {{retweet_count}} <span style="margin-left: 15px;">Original: </span> {{retweeted_status_screen_name}}</p>
-            <p><small><strong>Tweet ID:</strong> {{id}}</small> | <small><a href="https://twitter.com/KarinaBeteta01/status/{{id}}" target="_blank">Link</a></small></p>
+            <p><strong>@{{from_user}}</strong> - {{text}}</p>
+            <!-- <p>Retweets {{retweet_count}} <span style="margin-left: 15px;">Original: </span> {{retweeted_status_screen_name}}</p> -->
+            <p><small><strong>Tweet ID:</strong> {{id_str}}</small> | <small><a href="https://twitter.com/KarinaBeteta01/status/{{id_str}}" target="_blank">Link</a></small></p>
             <p>---</p>
         </div>
         {{/rows}}
@@ -90,49 +90,54 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("fullTableFilter").value = ""
-            var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSI8v7GRkOXfRZHwF-VQz_XAyszOUxSIpBH0RP4nBXRLH351fZRIa9jEy2AhMaqftZBoRDnbpMi-vT4/pub?output=csv"
+            var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT5JpTzvXP8KPEjKq-ywcnS6J-zGPyuQ6nR9IMGCFqq-ck79EM87TbrivextN_ZPEmVEAATqVM-HSfz/pub?gid=400689247&single=true&output=csv"
 
+            var data = [];
             Papa.parse(URL, {
                 download: true,
                 header: true,
                 complete: function(results) {
-                    var data = results.data
-                    console.log(data)
-                }
-            })
-        })
+                    data = results.data;
 
-        function showInfo(data) {
-            var tableOptions = {
-                "data": data,
-                "pagination": 50,
-                "tableDiv": "#fullTable",
-                "filterDiv": "#fullTableFilter"
-            }
+                    var tableOptions = {
+                        "data": data,
+                        "pagination": 50,
+                        "tableDiv": "#fullTable",
+                        "filterDiv": "#fullTableFilter"
+                    }
 
-            Sheetsee.makeTable(tableOptions)
-            Sheetsee.initiateTableFilter(tableOptions)
+                    Sheetsee.makeTable(tableOptions)
+                    Sheetsee.initiateTableFilter(tableOptions)
 
-            document.getElementById("fullTableFilter").onkeypress = function(e) {
-                if (!e) e = window.event;
-                var keyCode = e.keyCode || e.which;
-                var word_search = document.getElementById("fullTableFilter").value.toLowerCase();
-                var foundmatch = [];
-                if (word_search != "null" && e.which == 13) {
-                    var results = data.length;
-                    // console.log(results)
-                    // console.log(data)
-                    for (i = 0; i < data.length; i++) {
 
-                        if (data[i].text.toLowerCase().match(word_search)) {
-                            foundmatch.push(data[i]);
+
+                    document.getElementById("fullTableFilter").onkeypress = function(e) {
+                        if (!e) e = window.event;
+                        var keyCode = e.keyCode || e.which;
+                        var word_search = document.getElementById("fullTableFilter").value.toLowerCase();
+                        var foundmatch = [];
+                        if (word_search != "null" && e.which == 13) {
+                            var results = data.length;
+                            console.log(results)
+                                // console.log(data)
+                            for (i = 0; i < data.length; i++) {
+
+                                if (data[i].text.toLowerCase().match(word_search)) {
+                                    foundmatch.push(data[i]);
+                                }
+                            }
+                            document.getElementsByClassName("results_count")[0].innerHTML = foundmatch.length + " resultado(s)"
+                            console.log(foundmatch.length)
                         }
                     }
-                    document.getElementsByClassName("results_count")[0].innerHTML = foundmatch.length + " resultados."
-                    console.log(foundmatch.length)
                 }
-            }
-        }
+
+            });
+
+            // function showInfo(data) {
+
+            // }
+        })
     </script>
 </body>
 
